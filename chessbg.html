@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epic Chess Streaming Background</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            background: #0a0a0a;
+            position: relative;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .gradient-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at top left, rgba(139, 69, 19, 0.3) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom right, rgba(218, 165, 32, 0.3) 0%, transparent 50%),
+                        radial-gradient(ellipse at center, rgba(20, 20, 40, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+        }
+
+        .chess-board-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            background-size: 100px 100px;
+            background-image: 
+                linear-gradient(45deg, rgba(139, 69, 19, 0.5) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(139, 69, 19, 0.5) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(139, 69, 19, 0.5) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(139, 69, 19, 0.5) 75%);
+            background-position: 0 0, 0 50px, 50px -50px, -50px 0px;
+            transform: perspective(1000px) rotateX(60deg);
+            transform-origin: center;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(218, 165, 32, 0.6);
+            border-radius: 50%;
+            animation: particle-float 15s infinite;
+            box-shadow: 0 0 10px rgba(218, 165, 32, 0.8);
+        }
+
+        @keyframes particle-float {
+            0% { transform: translateY(1080px) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+        }
+
+        .piece-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .floating-piece {
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.15;
+            animation: piece-float 25s infinite ease-in-out;
+            text-shadow: 0 0 30px rgba(218, 165, 32, 0.5);
+            filter: drop-shadow(0 0 20px rgba(218, 165, 32, 0.3));
+        }
+
+        .floating-piece:nth-child(1) { left: 5%; top: 15%; animation-delay: 0s; }
+        .floating-piece:nth-child(2) { left: 85%; top: 10%; animation-delay: 5s; }
+        .floating-piece:nth-child(3) { left: 25%; top: 75%; animation-delay: 10s; }
+        .floating-piece:nth-child(4) { left: 70%; top: 70%; animation-delay: 15s; }
+        .floating-piece:nth-child(5) { left: 50%; top: 40%; animation-delay: 20s; font-size: 150px; }
+
+        @keyframes piece-float {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-40px) rotate(10deg) scale(1.05); }
+            50% { transform: translateY(-80px) rotate(-10deg) scale(1.1); }
+            75% { transform: translateY(-40px) rotate(5deg) scale(1.05); }
+        }
+
+        .light-ray {
+            position: absolute;
+            width: 2px;
+            height: 200%;
+            background: linear-gradient(to bottom, transparent, rgba(218, 165, 32, 0.15), transparent);
+            animation: ray-sweep 10s infinite linear;
+            transform-origin: top;
+        }
+
+        .light-ray:nth-child(1) { left: 20%; animation-delay: 0s; }
+        .light-ray:nth-child(2) { left: 50%; animation-delay: 3s; }
+        .light-ray:nth-child(3) { left: 80%; animation-delay: 6s; }
+
+        @keyframes ray-sweep {
+            0% { transform: translateX(-100vw) rotate(-20deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(100vw) rotate(-20deg); opacity: 0; }
+        }
+
+        .frame {
+            position: absolute;
+            border: 3px solid;
+            border-image: linear-gradient(135deg, rgba(218, 165, 32, 0.6), rgba(139, 69, 19, 0.4), rgba(218, 165, 32, 0.6)) 1;
+            animation: frame-glow 3s infinite alternate;
+        }
+
+        @keyframes frame-glow {
+            0% { box-shadow: inset 0 0 20px rgba(218, 165, 32, 0.2), 0 0 20px rgba(218, 165, 32, 0.2); }
+            100% { box-shadow: inset 0 0 40px rgba(218, 165, 32, 0.4), 0 0 40px rgba(218, 165, 32, 0.3); }
+        }
+
+        .frame-top-left {
+            top: 30px;
+            left: 30px;
+            width: 400px;
+            height: 300px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .frame-bottom-right {
+            bottom: 30px;
+            right: 30px;
+            width: 400px;
+            height: 300px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .center-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            border: 2px solid rgba(218, 165, 32, 0.2);
+            border-radius: 50%;
+            animation: ring-pulse 4s infinite;
+        }
+
+        .center-ring::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            border: 1px solid rgba(218, 165, 32, 0.15);
+            border-radius: 50%;
+        }
+
+        @keyframes ring-pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.5; }
+        }
+
+        .vignette {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.8);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="chess-board-bg"></div>
+    
+    <div class="particles" id="particles"></div>
+    
+    <div class="piece-container">
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+    </div>
+    
+    <div class="piece-container">
+        <div class="floating-piece">♔</div>
+        <div class="floating-piece">♕</div>
+        <div class="floating-piece">♜</div>
+        <div class="floating-piece">♞</div>
+        <div class="floating-piece">♟</div>
+    </div>
+    
+    <div class="frame frame-top-left"></div>
+    <div class="frame frame-bottom-right"></div>
+    
+    <div class="center-ring"></div>
+    
+    <div class="vignette"></div>
+
+    <script>
+        // Generate particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>
